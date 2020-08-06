@@ -44,11 +44,15 @@ Tuning *method = n* to compare different methods, where:
 
 (   n = 4 ---- Many-to-one   )
 
-## 
+## More
+
+If you find any mistakes or just want to chat, please email me at zhaojiaheng91@outlook.com 
+
+😜
 
 
 
-### Reference
+## Reference
 
 [1] E. B. Olson, “Real-time correlative scan matching,” in *2009 IEEE International Conference on Robotics and Automation*, May 2009, pp. 4387–4393, doi: [10.1109/ROBOT.2009.5152375](https://doi.org/10.1109/ROBOT.2009.5152375).
 
