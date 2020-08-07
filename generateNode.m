@@ -1,7 +1,9 @@
-function newnode = generateNode(n,nodes,gridmap, scan, pose, serchWindow,nLevel)
+function newnode = generateNode(n,nodes_all,gridmap, scan, pose, serchWindow,nLevel)
 % GENERALNODE generate this node
 % AUTHOR Jiaheng Zhao
 
+% preID = size(nodes_all,2);
+nodes = nodes_all(n,:);
 level = nodes.level;
 
 logLookupTable = gridmap{level+1}.logLookupTable;
@@ -12,7 +14,7 @@ minY   = gridmap{level+1}.origin(2);
 resolution = gridmap{level+1}.resolution;
 
 if level == 0
-    tmax = 2 * (serchWindow(1));
+    tmax = serchWindow(1);
     rmax = 1 * (serchWindow(3));
 else
     resoRatio = gridmap{1}.resolution / gridmap{level+1}.resolution;
@@ -56,8 +58,9 @@ for itheta = 1 : nrh
             bestPose  = [tx; ty; theta];
             bestScore = score;
             newnode(nodeID).level = level+1;
-            newnode(nodeID).parent = n;
-            newnode(nodeID).children =[];
+%             newnode(nodeID).parent = n;
+%             newnode(nodeID).children =[];
+%             newnode(nodeID).nodeID = preID + nodeID;
             newnode(nodeID).bestPose = bestPose;
             newnode(nodeID).bestScore = bestScore;
             newnode(nodeID).expand = false;
@@ -70,5 +73,12 @@ for itheta = 1 : nrh
         end
     end
 end
-% sort(newnode(:).bestScore);
+% newnode(:).level = level+1;
+% newnode.expand = false;
+
+tmp = struct2table(newnode);
+newnode = sortrows(tmp,'bestScore');
+% newnode = table2struct(tmp);
+% newnode = tmp';
+
 end

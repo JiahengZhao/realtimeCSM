@@ -17,7 +17,7 @@ t1 = tic;
 %                     serchWindow,serchWindow(1), serchWindow(3),resoRatio);
 
 node = BBSearch(2,gridMap, scan, bestPose, serchWindow);
-    bestPose = node.bestPose;
+    bestPose = node.bestPose{:};
     bestScore = node.bestScore;
 t4= toc(t1);
 %%
