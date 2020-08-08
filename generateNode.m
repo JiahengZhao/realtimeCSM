@@ -20,7 +20,9 @@ else
     resoRatio = gridmap{1}.resolution / gridmap{level+1}.resolution;
     tmax = 1 * serchWindow(1) / resoRatio; % (level+1); %
     rmax = serchWindow(3);% (level+1); %
-    serchWindow(1:2) = serchWindow(1:2) / resoRatio;
+%     serchWindow(1:2) = serchWindow(1:2) / resoRatio;
+    serchWindow = serchWindow / resoRatio;
+
 end
 
 % search window

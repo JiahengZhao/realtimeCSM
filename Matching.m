@@ -1,4 +1,4 @@
-function [pose, bestScore] = Matching(gridmap_low,gridmap_high, scan, pose, serchWindow,tmax, rmax)
+function [pose, bestScore] = Matching(gridmap_low,gridmap_high, scan, pose, serchWindow)
 % MATCHING scan matching in the serching window.
 % AUTHOR Jiaheng Zhao
 

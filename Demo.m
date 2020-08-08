@@ -14,16 +14,16 @@ cellResolution_Low = 0.2;    % m
 cellResolution_High = 0.02;    % m
 fineCellResolution = 0.02; % m
 % Scan matching parameters
-nLevel = 5;
+nLevel = 4;
 
-corResolution  = [0.2; 0.2; deg2rad(4)];
+corResolution  = [0.4; 0.4; deg2rad(10)];
 bruteResolution = [0.01; 0.01; deg2rad(0.2)];
-multiResolution  = [0.2; 0.2; deg2rad(4)];
+multiResolution  = [0.2; 0.2; deg2rad(3)];
 multiResolution2  = [fineCellResolution*2^(nLevel-1); fineCellResolution*2^(nLevel-1); deg2rad(4)];
 nTo1index = [];
 
 % 1-Brute Force; 2-2 Level CSM; 3-Multi-level CSM;
-method = 3;
+method = 2;
 
 thisPose = [0; 0; 0];
 traj = thisPose;
@@ -65,7 +65,7 @@ for thisStep = startID: stepSize: 1*(startID+stepSize+1)
             [thisPose, ~] = BruteMatch(gridMap_High, thisScan, initial_pose, bruteResolution, 0.5,deg2rad(7));
         case 2
             [thisPose, thisScore] = Matching(gridMap_Low,gridMap_High, thisScan, initial_pose,...
-                corResolution,corResolution(1)*3, corResolution(3));
+                corResolution);
         case 3
             [thisPose, thisScore] = multiMatching(nLevel,currMapPt,fineCellResolution,lidar_param,...
                 thisScan, initial_pose, multiResolution2);
