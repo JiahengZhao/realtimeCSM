@@ -1,16 +1,17 @@
 function [pose, bestHits] = BruteMatch(gridmap, scan, pose,...
-                            bruteResolution, tmax, rmax)
+                            searchWindow)
 % Grid map information
 logLookupTable = gridmap.logLookupTable;
 minX   = gridmap.origin(1);
 minY   = gridmap.origin(2);
 nCols  = size(logLookupTable, 2);
 nRows  = size(logLookupTable, 1);
+step = gridmap.resolution;
 
 % Search space                               
-xs = (pose(1) - tmax) : bruteResolution(1) : (pose(1) + tmax);
-ys = (pose(2) - tmax) : bruteResolution(2) : (pose(2) + tmax);
-rs = (pose(3) - rmax) : bruteResolution(3) : (pose(3) + rmax);
+xs = (pose(1) - searchWindow(1)) : step : (pose(1) + searchWindow(1));
+ys = (pose(2) - searchWindow(2)) : step : (pose(2) + searchWindow(2));
+rs = (pose(3) - searchWindow(3)) : deg2rad(1) : (pose(3) + searchWindow(3));
 nx = length(xs);    ny = length(ys);    nr = length(rs);
 
 % Searching

@@ -16,13 +16,14 @@ resolution = gridmap{level+1}.resolution;
 if level == 0
     tmax = serchWindow(1);
     rmax = 1 * (serchWindow(3));
+    serchWindow(1:2) =  [resolution; resolution];
+    serchWindow(3) = deg2rad(2);
 else
     resoRatio = gridmap{1}.resolution / gridmap{level+1}.resolution;
     tmax = 1 * serchWindow(1) / resoRatio; % (level+1); %
     rmax = serchWindow(3);% (level+1); %
-%     serchWindow(1:2) = serchWindow(1:2) / resoRatio;
-    serchWindow = serchWindow / resoRatio;
-
+    serchWindow(1:2) =  [resolution; resolution];
+    serchWindow(3) = deg2rad(2);
 end
 
 % search window
