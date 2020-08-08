@@ -11,12 +11,13 @@ end
 n = 0;
 bestScore = Inf;
 
-if sum(nodes.level == nLevel) > 0   
+% if sum(nodes.level == nLevel) > 0   
+if nodes.level(end) == nLevel   
     id = (~nodes.expand) & (~nodes.full);
     id2 = nodes.bestScore == min(nodes.bestScore(id)) & id;
     n = find(id2);
 else
-    id = (~nodes.expand) & (~nodes.full) & (nodes.level == max(nodes.level));
+    id = (~nodes.expand) & (~nodes.full) & (nodes.level == nodes.level(end));
     id2 = nodes.bestScore == min(nodes.bestScore(id)) & id;
     n = find(id2);
 end

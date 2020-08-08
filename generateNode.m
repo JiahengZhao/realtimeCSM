@@ -20,10 +20,10 @@ if level == 0
     serchWindow(3) = deg2rad(2);
 else
     resoRatio = gridmap{1}.resolution / gridmap{level+1}.resolution;
-%     tmax = 1 * serczhWindow(1) / resoRatio; % (level+1); %
-%     rmax = serchWindow(3);% (level+1); %
-    tmax = resoRatio * resolution / 2;
-    rmax = deg2rad(2);% (level+1); %
+    tmax = 1 * serchWindow(1) / resoRatio; % (level+1); %
+    rmax = serchWindow(3);% (level+1); %
+%     tmax = resoRatio * resolution / 2;
+%     rmax = deg2rad(2);% (level+1); %
     serchWindow(1:2) =  [resolution; resolution];
     serchWindow(3) = deg2rad(2);
 end

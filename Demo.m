@@ -15,13 +15,13 @@ cellResolution_High = 0.02;    % m
 % fineCellResolution = 0.02; % m
 
 % Scan matching parameters
-nLevel = 4;
+nLevel = 6;
 
 searchWindow = [1; 1; deg2rad(20)]; % Pose searching boundary
 % corResolution  = [0.4; 0.4; deg2rad(10)];
 % bruteResolution = [0.01; 0.01; deg2rad(0.2)];
 % multiResolution  = [0.2; 0.2; deg2rad(3)];
-multiResolution2  = [cellResolution_High*2^(nLevel-1); cellResolution_High*2^(nLevel-1); deg2rad(10)];
+% multiResolution2  = [cellResolution_High*2^(nLevel-1); cellResolution_High*2^(nLevel-1); deg2rad(10)];
 nTo1index = [];
 
 % 1-Brute Force; 2-2 Level CSM; 3-Multi-level CSM;
@@ -31,7 +31,7 @@ thisPose = [0; 0; 0];
 traj = thisPose;
 
 nStep = size(scan,1);
-stepSize = 40;
+stepSize = 50;
 startID = 1;
 f = figure;
 
