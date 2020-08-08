@@ -20,16 +20,21 @@ if level == 0
     serchWindow(3) = deg2rad(2);
 else
     resoRatio = gridmap{1}.resolution / gridmap{level+1}.resolution;
-    tmax = 1 * serchWindow(1) / resoRatio; % (level+1); %
-    rmax = serchWindow(3);% (level+1); %
+%     tmax = 1 * serczhWindow(1) / resoRatio; % (level+1); %
+%     rmax = serchWindow(3);% (level+1); %
+    tmax = resoRatio * resolution / 2;
+    rmax = deg2rad(2);% (level+1); %
     serchWindow(1:2) =  [resolution; resolution];
     serchWindow(3) = deg2rad(2);
 end
 
 % search window
-xsh = (pose(1) - tmax) : serchWindow(1) : (pose(1) + tmax);
-ysh = (pose(2) - tmax) : serchWindow(2) : (pose(2) + tmax);
-rsh = (pose(3) - rmax) : serchWindow(3) : (pose(3) + rmax);
+% xsh = (pose(1) - tmax) : serchWindow(1) : (pose(1) + tmax);
+% ysh = (pose(2) - tmax) : serchWindow(2) : (pose(2) + tmax);
+% rsh = (pose(3) - rmax) : serchWindow(3) : (pose(3) + rmax);
+xsh = (pose(1) ) : serchWindow(1) : (pose(1) + 2*tmax);
+ysh = (pose(2) ) : serchWindow(2) : (pose(2) + 2*tmax);
+rsh = (pose(3) ) : serchWindow(3) : (pose(3) + 2*rmax);
 nxh = length(xsh);    nyh = length(ysh);    nrh = length(rsh);
 
 nodeID = 1;

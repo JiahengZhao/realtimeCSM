@@ -15,9 +15,9 @@ cellResolution_High = 0.02;    % m
 % fineCellResolution = 0.02; % m
 
 % Scan matching parameters
-nLevel = 3;
+nLevel = 4;
 
-searchWindow = [0.4; 0.4; deg2rad(7)]; % Pose searching boundary
+searchWindow = [1; 1; deg2rad(20)]; % Pose searching boundary
 % corResolution  = [0.4; 0.4; deg2rad(10)];
 % bruteResolution = [0.01; 0.01; deg2rad(0.2)];
 % multiResolution  = [0.2; 0.2; deg2rad(3)];
@@ -34,6 +34,7 @@ nStep = size(scan,1);
 stepSize = 40;
 startID = 1;
 f = figure;
+
 for thisStep = startID: stepSize: 1*(startID+stepSize+1)
     
     thisScan = scan.scan{thisStep};
@@ -61,7 +62,7 @@ for thisStep = startID: stepSize: 1*(startID+stepSize+1)
     initial_pose = thisPose + delt;
     nTo1index = [nTo1index thisStep];
     
-    
+    tic
     switch method
         case 1
             [thisPose, ~] = BruteMatch(gridMap_High, thisScan, initial_pose, searchWindow);
@@ -80,6 +81,7 @@ for thisStep = startID: stepSize: 1*(startID+stepSize+1)
 %                 allScan, initial_pose, multiResolution,corResolution(1)*3, corResolution(3));
             
     end
+    toc
     if method ~= 4
         F = visulization(map,thisScan,thisPose,traj,method,F);
     else
