@@ -1,9 +1,8 @@
-function newnode = generateNode(n,nodes_all,gridmap, scan, pose, serchWindow,nLevel)
+function newnode = generateNode(nodes,gridmap, scan, pose, serchWindow)
 % GENERALNODE generate this node
 % AUTHOR Jiaheng Zhao
 
-% preID = size(nodes_all,2);
-nodes = nodes_all(n,:);
+
 level = nodes.level;
 
 logLookupTable = gridmap{level+1}.logLookupTable;
@@ -12,29 +11,21 @@ nRows  = size(logLookupTable, 1);
 minX   = gridmap{level+1}.origin(1);
 minY   = gridmap{level+1}.origin(2);
 resolution = gridmap{level+1}.resolution;
+searchStep = [resolution; resolution; deg2rad(2)];
 
 if level == 0
     tmax = serchWindow(1);
-    rmax = 1 * (serchWindow(3));
-    serchWindow(1:2) =  [resolution; resolution];
-    serchWindow(3) = deg2rad(2);
+    rmax = serchWindow(3);
 else
-    resoRatio = gridmap{1}.resolution / gridmap{level+1}.resolution;
-    tmax = 1 * serchWindow(1) / resoRatio; % (level+1); %
-    rmax = serchWindow(3);% (level+1); %
-%     tmax = resoRatio * resolution / 2;
-%     rmax = deg2rad(2);% (level+1); %
-    serchWindow(1:2) =  [resolution; resolution];
-    serchWindow(3) = deg2rad(2);
+    pose = nodes.bestPose{:};
+    tmax = gridmap{level}.resolution/2; % (level+1); %
+    rmax = 0;
 end
 
 % search window
-% xsh = (pose(1) - tmax) : serchWindow(1) : (pose(1) + tmax);
-% ysh = (pose(2) - tmax) : serchWindow(2) : (pose(2) + tmax);
-% rsh = (pose(3) - rmax) : serchWindow(3) : (pose(3) + rmax);
-xsh = (pose(1) ) : serchWindow(1) : (pose(1) + 2*tmax);
-ysh = (pose(2) ) : serchWindow(2) : (pose(2) + 2*tmax);
-rsh = (pose(3) ) : serchWindow(3) : (pose(3) + 2*rmax);
+xsh = (pose(1) ) : searchStep(1) : (pose(1) + 2*tmax);
+ysh = (pose(2) ) : searchStep(2) : (pose(2) + 2*tmax);
+rsh = (pose(3) ) : searchStep(3) : (pose(3) + 2*rmax);
 nxh = length(xsh);    nyh = length(ysh);    nrh = length(rsh);
 
 nodeID = 1;
@@ -55,8 +46,6 @@ for itheta = 1 : nrh
             iy = ScanIDy(isIn);
             
             % to grid linear index
-            %             idx = iy + (ix-1)*nRows_High;
-            % test
             idx = nRows - iy + 1 + (ix-1)*nRows;
             
             logProbs = logLookupTable(idx);
@@ -66,27 +55,14 @@ for itheta = 1 : nrh
             bestPose  = [tx; ty; theta];
             bestScore = score;
             newnode(nodeID).level = level+1;
-%             newnode(nodeID).parent = n;
-%             newnode(nodeID).children =[];
-%             newnode(nodeID).nodeID = preID + nodeID;
             newnode(nodeID).bestPose = bestPose;
             newnode(nodeID).bestScore = bestScore;
-            newnode(nodeID).expand = false;
-            if level < nLevel - 1
-                newnode(nodeID).full = false;
-            else
-                newnode(nodeID).full = true;
-            end
                 nodeID = nodeID + 1;
         end
     end
 end
-% newnode(:).level = level+1;
-% newnode.expand = false;
 
 tmp = struct2table(newnode);
 newnode = sortrows(tmp,'bestScore');
-% newnode = table2struct(tmp);
-% newnode = tmp';
 
 end
